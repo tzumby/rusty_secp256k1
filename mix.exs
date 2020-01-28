@@ -4,7 +4,7 @@ defmodule RustySecp256k1.MixProject do
   def project do
     [
       app: :rusty_secp256k1,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.9",
       description: description(),
       start_permanent: Mix.env() == :prod,
@@ -16,9 +16,7 @@ defmodule RustySecp256k1.MixProject do
         licenses: ["Apache License 2.0"],
         links: %{"GitHub" => "https://github.com/tzumby/rusty_secp256k1"}
       },
-      rustler_crates: [
-        secp256k1: []
-      ],
+      rustler_crates: rustler_crates(),
       name: "RustySecp256k1"
     ]
   end
@@ -32,6 +30,15 @@ defmodule RustySecp256k1.MixProject do
 
   defp description do
     "NIF library using pure Rust libsecp256k1 implementation."
+  end
+
+  defp rustler_crates do
+    [
+      secp256k1: [
+        path: "native/secp256k1",
+        mode: :release
+      ]
+    ]
   end
 
   # Run "mix help deps" to learn about dependencies.
