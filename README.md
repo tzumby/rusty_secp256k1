@@ -1,6 +1,14 @@
 # RustySecp256k1
 
-NIF library using `rustler` and the pure-rust implementation of Secp256k1. 
+NIF library using `rustler` and a [pure Rust implementation of Secp256k1](https://github.com/paritytech/libsecp256k1).
+This is not an exhaustive port of the library to Elixir but only meant to provide functionality for:
+
+- Creating Public Key from Private Keys
+- Decompressing Public Keys
+- Performing point addition using Public Keys and Tweak Keys
+
+For a complete libsecp256k1 implementation see [exthereum/libsecp256k1](https://github.com/exthereum/libsecp256k1) for a C-based NIF. 
+
 
 ## Installation
 
