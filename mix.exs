@@ -4,20 +4,35 @@ defmodule RustySecp256k1.MixProject do
   def project do
     [
       app: :rusty_secp256k1,
-      version: "0.1.2",
+      version: "0.1.6",
       elixir: "~> 1.9",
       description: description(),
+      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       compilers: [:rustler] ++ Mix.compilers(),
       source_url: "https://github.com/tzumby/rusty_secp256k1",
-      package: %{
-        name: "rusty_secp256k1",
-        licenses: ["Apache License 2.0"],
-        links: %{"GitHub" => "https://github.com/tzumby/rusty_secp256k1"}
-      },
+      package: package(),
       rustler_crates: rustler_crates(),
       name: "RustySecp256k1"
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["tzumby"],
+      name: "rusty_secp256k1",
+      licenses: ["Apache License 2.0"],
+      links: %{"GitHub" => "https://github.com/tzumby/rusty_secp256k1"},
+      files: [
+        "mix.exs",
+        "native/secp256k1/src",
+        "native/secp256k1/Cargo.toml",
+        "lib",
+        "LICENSE",
+        "README.md",
+        "CHANGELOG.md"
+      ]
     ]
   end
 
@@ -35,11 +50,14 @@ defmodule RustySecp256k1.MixProject do
   defp rustler_crates do
     [
       secp256k1: [
-        path: "./native/secp256k1",
-        mode: :release
+        path: "native/secp256k1",
+        mode: rustc_mode(Mix.env())
       ]
     ]
   end
+
+  defp rustc_mode(:prod), do: :release
+  defp rustc_mode(_), do: :debug
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do

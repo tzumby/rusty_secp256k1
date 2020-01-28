@@ -34,7 +34,7 @@ fn ec_pubkey_tweak_add<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, 
 
     let tweak_key_binary: Binary = args[1].decode()?;
 
-    if tweak_key_binary.len() < 33 {
+    if tweak_key_binary.len() < 32 {
        return Ok((atoms::error(), "Tweak key is not 32 bits." ).encode(env)); 
     }
 
