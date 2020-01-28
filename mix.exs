@@ -4,7 +4,7 @@ defmodule RustySecp256k1.MixProject do
   def project do
     [
       app: :rusty_secp256k1,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.9",
       description: description(),
       start_permanent: Mix.env() == :prod,
@@ -35,7 +35,7 @@ defmodule RustySecp256k1.MixProject do
   defp rustler_crates do
     [
       secp256k1: [
-        path: "native/secp256k1",
+        path: "./native/secp256k1",
         mode: :release
       ]
     ]
