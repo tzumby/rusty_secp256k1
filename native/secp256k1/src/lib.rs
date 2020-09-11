@@ -22,8 +22,15 @@ rustler::rustler_export_nifs! {
 }
 
 fn ec_sign<'a>(env: Env<'a>, args: &[Term<'a>]) -> Result<Term<'a>, Error> {
-    let message_bin: Binary = args[0].decode()?;
-    let private_key_bin: Binary = args[1].decode()?;
+    let message_bin: Binary = match args[0].decode() {
+        Ok(binary) => binary,
+        Err(_error) => return Ok((atoms::error(), "Message is not binary.").encode(env)),
+    };
+
+    let private_key_bin: Binary = match args[1].decode() {
+        Ok(binary) => binary,
+        Err(_error) => return Ok((atoms::error(), "Private key is not binary.").encode(env)),
+    };
 
     if message_bin.len() != 32 {
         return Ok((atoms::error(), "Message is not 32 bytes.").encode(env));
